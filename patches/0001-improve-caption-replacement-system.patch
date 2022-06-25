@@ -179,10 +179,10 @@ index 8173324d11ddbe5f8bf2be9ab536abbaf3ef8965..dcc6a990a12b2bec74c70696e906a419
                          }
                      } else {
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java
-index fe18e821e1402ab1123436f590fc58112e979083..ac070405a08b784958684d14bef7a05da0baa7d7 100644
+index 358a6ed26d1efddc89b679276383f0bc9c656b1b..18cb6822fd32a5c94a6c0bf1c726fa4db25ec6d5 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java
-@@ -500,8 +500,11 @@ public final class FlagArgument<C> extends CommandArgument<C, Object> {
+@@ -501,8 +501,11 @@ public final class FlagArgument<C> extends CommandArgument<C, Object> {
                      FlagArgument.FlagArgumentParser.class,
                      context,
                      failureReason.getCaption(),
@@ -195,7 +195,7 @@ index fe18e821e1402ab1123436f590fc58112e979083..ac070405a08b784958684d14bef7a05d
 +                    // cloudnet end
              );
              this.input = input;
-         }
+             this.failureReason = failureReason;
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java b/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java
 index 6b574aa40e7dca5fd476228ced656120d0bf0994..a01a8220d7c495024c39d07c40999dcde6c9bf0c 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java
