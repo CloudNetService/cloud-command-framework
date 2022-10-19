@@ -5,15 +5,15 @@ Subject: [PATCH] disable static argument suggestion validation
 
 
 diff --git a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-index f94ba8440e0ede4229263589f83e2f26d6afff08..f944ca256b6b64020f802f5eadfa76ba876850d4 100644
+index f94ba8440e0ede4229263589f83e2f26d6afff08..668239c78e25c999c6fbc9c32251b794e09cd80e 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-@@ -599,7 +599,7 @@ public final class CommandTree<C> {
-                 final List<String> suggestionsToAdd = argument.getValue().getSuggestionsProvider()
+@@ -600,7 +600,7 @@ public final class CommandTree<C> {
                          .apply(commandContext, literalValue);
                  for (String suggestion : suggestionsToAdd) {
--                    if (suggestion.equals(literalValue) || !suggestion.startsWith(literalValue)) {
-+                    if (suggestion.equals(literalValue) /* || !suggestion.startsWith(literalValue)*/) { // CloudNet - disable startWith check
-                         continue;
+                     if (suggestion.equals(literalValue) || !suggestion.startsWith(literalValue)) {
+-                        continue;
++                        // continue; // CloudNet - disable suggestion pre-validation
                      }
                      suggestions.add(suggestion);
+                 }
