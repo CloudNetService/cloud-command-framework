@@ -5,39 +5,38 @@ Subject: [PATCH] fix invalid suggestions caused by dynamic arguments
 
 
 diff --git a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-index 668239c78e25c999c6fbc9c32251b794e09cd80e..f4b95ea61e77ac0da7abed7f25588328e27238f0 100644
+index 668239c78e25c999c6fbc9c32251b794e09cd80e..053f5b1def212f0d3cef1a5db527fcdd2363952d 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-@@ -702,9 +702,25 @@ public final class CommandTree<C> {
+@@ -702,10 +702,25 @@ public final class CommandTree<C> {
              // START: Parsing
              commandContext.setCurrentArgument(child.getValue());
              final ArgumentParseResult<?> result = child.getValue().getParser().parse(commandContext, commandQueue);
 -            if (result.getParsedValue().isPresent() && !commandQueue.isEmpty()) {
 -                commandContext.store(child.getValue().getName(), result.getParsedValue().get());
--                return this.getSuggestions(commandContext, commandQueue, child);
 +            // CloudNet start - fix suggestions for dynamic arguments
 +            final Optional<?> parsedValue = result.getParsedValue();
 +            final boolean parseSuccess = parsedValue.isPresent();
 +
-+            if ((parseSuccess && !commandQueue.isEmpty()) || (!parseSuccess && commandQueue.size() > 1)) {
-+                if (parseSuccess) {
-+                    // the current argument at the position is parsable and there are more arguments following
-+                    commandContext.store(child.getValue().getName(), parsedValue.get());
-+                    return this.getSuggestions(commandContext, commandQueue, child);
-+                } else {
-+                    // at this point there should normally be no need to reset the command queue as we expect
-+                    // users to only take out an argument if the parse succeeded. Just to be sure we do it anyway
-+                    commandQueue.clear();
-+                    commandQueue.addAll(commandQueueOriginal);
-+                    // there are more arguments following but the current argument isn't matching - there
-+                    // is no need to collect any further suggestions
-+                    return Collections.emptyList();
-+                }
-+                // CloudNet end
++            if (parseSuccess && !commandQueue.isEmpty()) {
++                // the current argument at the position is parsable and there are more arguments following
++                commandContext.store(child.getValue().getName(), parsedValue.get());
+                 return this.getSuggestions(commandContext, commandQueue, child);
++            } else if (!parseSuccess && commandQueueOriginal.size() > 1) {
++                // at this point there should normally be no need to reset the command queue as we expect
++                // users to only take out an argument if the parse succeeded. Just to be sure we reset anyway
++                commandQueue.clear();
++                commandQueue.addAll(commandQueueOriginal);
++
++                // there are more arguments following but the current argument isn't matching - there
++                // is no need to collect any further suggestions
++                return Collections.emptyList();
              }
++            // CloudNet end
              // END: Parsing
          }
-@@ -713,6 +729,15 @@ public final class CommandTree<C> {
+ 
+@@ -713,6 +728,15 @@ public final class CommandTree<C> {
          commandQueue.clear();
          commandQueue.addAll(commandQueueOriginal);
  
