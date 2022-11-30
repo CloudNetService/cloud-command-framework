@@ -5,10 +5,10 @@ Subject: [PATCH] improve caption replacement system
 
 
 diff --git a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26d6afff08 100644
+index 9742dcf1721bc41ce28008a310b004e941194683..8acc9a09e520bf8a78dd20dc7e196a14ab4c8811 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-@@ -141,7 +141,11 @@ public final class CommandTree<C> {
+@@ -142,7 +142,11 @@ public final class CommandTree<C> {
                      new NoSuchCommandException(
                              commandContext.getSender(),
                              new ArrayList<>(),
@@ -21,7 +21,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                      )
              );
          }
-@@ -161,7 +165,10 @@ public final class CommandTree<C> {
+@@ -162,7 +166,10 @@ public final class CommandTree<C> {
                          commandContext.getSender(),
                          command.getSenderType().get(),
                          new ArrayList<>(command.getArguments()),
@@ -33,7 +33,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                  ));
              }
          }
-@@ -184,7 +191,10 @@ public final class CommandTree<C> {
+@@ -185,7 +192,10 @@ public final class CommandTree<C> {
                              .stream()
                              .filter(node -> node.getValue() != null)
                              .map(Node::getValue)
@@ -45,7 +45,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
              ));
          }
  
-@@ -213,7 +223,10 @@ public final class CommandTree<C> {
+@@ -214,7 +224,10 @@ public final class CommandTree<C> {
                              .stream()
                              .filter(node -> node.getValue() != null)
                              .map(Node::getValue)
@@ -57,7 +57,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                      ));
                  }
              } else {
-@@ -225,7 +238,10 @@ public final class CommandTree<C> {
+@@ -226,7 +239,10 @@ public final class CommandTree<C> {
                          .stream()
                          .filter(node -> node.getValue() != null)
                          .map(Node::getValue)
@@ -69,7 +69,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                  ));
              }
          } else {
-@@ -254,7 +270,11 @@ public final class CommandTree<C> {
+@@ -255,7 +271,11 @@ public final class CommandTree<C> {
                  return Pair.of(null, new NoSuchCommandException(
                          commandContext.getSender(),
                          this.getChain(root).stream().map(Node::getValue).collect(Collectors.toList()),
@@ -82,7 +82,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                  ));
              }
              /* If we couldn't match a child, check if there's a command attached and execute it */
-@@ -271,7 +291,10 @@ public final class CommandTree<C> {
+@@ -272,7 +292,10 @@ public final class CommandTree<C> {
                                      .stream()
                                      .filter(node -> node.getValue() != null)
                                      .map(Node::getValue)
@@ -94,7 +94,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                      ));
                  }
                  return Pair.of(root.getValue().getOwningCommand(), null);
-@@ -284,7 +307,10 @@ public final class CommandTree<C> {
+@@ -285,7 +308,10 @@ public final class CommandTree<C> {
                      .stream()
                      .filter(node -> node.getValue() != null)
                      .map(Node::getValue)
@@ -106,7 +106,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
              ));
          }
      }
-@@ -335,7 +361,10 @@ public final class CommandTree<C> {
+@@ -336,7 +362,10 @@ public final class CommandTree<C> {
                                  .stream()
                                  .filter(node -> node.getValue() != null)
                                  .map(Node::getValue)
@@ -118,7 +118,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                  ));
              }
              if (child.getValue() != null) {
-@@ -371,7 +400,10 @@ public final class CommandTree<C> {
+@@ -373,7 +402,10 @@ public final class CommandTree<C> {
                                                  .stream()
                                                  .filter(node -> node.getValue() != null)
                                                  .map(Node::getValue)
@@ -130,7 +130,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                                  ));
                              }
                              return Pair.of(command, null);
-@@ -387,7 +419,10 @@ public final class CommandTree<C> {
+@@ -389,7 +421,10 @@ public final class CommandTree<C> {
                                  .stream()
                                  .filter(node -> node.getValue() != null)
                                  .map(Node::getValue)
@@ -142,7 +142,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                          ));
                      } else {
                          /* The child is not a leaf, but may have an intermediary executor, attempt to use it */
-@@ -404,7 +439,10 @@ public final class CommandTree<C> {
+@@ -406,7 +441,10 @@ public final class CommandTree<C> {
                                                  .stream()
                                                  .filter(node -> node.getValue() != null)
                                                  .map(Node::getValue)
@@ -154,7 +154,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                                  ));
                              }
                              return Pair.of(command, null);
-@@ -417,7 +455,10 @@ public final class CommandTree<C> {
+@@ -419,7 +457,10 @@ public final class CommandTree<C> {
                                  .stream()
                                  .filter(node -> node.getValue() != null)
                                  .map(Node::getValue)
@@ -166,7 +166,7 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                          ));
                      }
                  }
-@@ -455,7 +496,10 @@ public final class CommandTree<C> {
+@@ -457,7 +498,10 @@ public final class CommandTree<C> {
                                      .stream()
                                      .filter(node -> node.getValue() != null)
                                      .map(Node::getValue)
@@ -179,10 +179,10 @@ index 4449c85af138ec5461f2afc10e1d74677ca33ae3..f94ba8440e0ede4229263589f83e2f26
                          }
                      } else {
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java
-index 358a6ed26d1efddc89b679276383f0bc9c656b1b..18cb6822fd32a5c94a6c0bf1c726fa4db25ec6d5 100644
+index 46a4608faf198332c05e401f7d898ae2625c2774..e62a628b007b17864e4b3a508eec0000c33d792f 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/compound/FlagArgument.java
-@@ -501,8 +501,11 @@ public final class FlagArgument<C> extends CommandArgument<C, Object> {
+@@ -497,8 +497,11 @@ public final class FlagArgument<C> extends CommandArgument<C, Object> {
                      FlagArgument.FlagArgumentParser.class,
                      context,
                      failureReason.getCaption(),
@@ -197,7 +197,7 @@ index 358a6ed26d1efddc89b679276383f0bc9c656b1b..18cb6822fd32a5c94a6c0bf1c726fa4d
              this.input = input;
              this.failureReason = failureReason;
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java b/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java
-index 6b574aa40e7dca5fd476228ced656120d0bf0994..a01a8220d7c495024c39d07c40999dcde6c9bf0c 100644
+index c5b33dc34cb6237604fb78dbd3d33a9f6b09d349..266af86a31f584afd431a10b974d0208dec9367e 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/preprocessor/RegexPreprocessor.java
 @@ -116,7 +116,7 @@ public final class RegexPreprocessor<C> implements BiFunction<@NonNull CommandCo
@@ -228,7 +228,7 @@ index 6b574aa40e7dca5fd476228ced656120d0bf0994..a01a8220d7c495024c39d07c40999dcd
                      this.failureCaption,
                      CaptionVariable.of(
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/BooleanArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/BooleanArgument.java
-index 7118a14c25a5c0b767cca66fc801f777e051b75f..4a6af24a04c00965dc57c76bcb6189b009939e61 100644
+index 8e1d29e897a1938cc2df276d3d4dfdd2b1ef810a..353fe98670cee55cf937dc88d0f023c7aa7d7c7a 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/BooleanArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/BooleanArgument.java
 @@ -271,7 +271,10 @@ public final class BooleanArgument<C> extends CommandArgument<C, Boolean> {
@@ -244,7 +244,7 @@ index 7118a14c25a5c0b767cca66fc801f777e051b75f..4a6af24a04c00965dc57c76bcb6189b0
              this.input = input;
              this.liberal = liberal;
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/CharArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/CharArgument.java
-index 0d2c835e7bdeef5232ce6cab7c652ae3891e7ad5..37aa633abdc6c7ce7d881e5b1db3f283daafb717 100644
+index d90f7b6266ea7e1ad0ca6768178fe631d7a53cc7..fae1a7f3009e18dafe0ae252a09f7eb4c937ea23 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/CharArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/CharArgument.java
 @@ -176,7 +176,10 @@ public final class CharArgument<C> extends CommandArgument<C, Character> {
@@ -260,7 +260,7 @@ index 0d2c835e7bdeef5232ce6cab7c652ae3891e7ad5..37aa633abdc6c7ce7d881e5b1db3f283
              this.input = input;
          }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/DurationArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/DurationArgument.java
-index 7336c3807262c6ca401ed87c931420118f0a9c92..e4713550eef51f44b491bdb403627cd87681a9e9 100644
+index eebe3651fc9b75a45457996501c4eda713da681c..2acdd533d22a0934275f34c547cc2fa4fc595600 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/DurationArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/DurationArgument.java
 @@ -304,7 +304,10 @@ public final class DurationArgument<C> extends CommandArgument<C, Duration> {
@@ -276,7 +276,7 @@ index 7336c3807262c6ca401ed87c931420118f0a9c92..e4713550eef51f44b491bdb403627cd8
              this.input = input;
          }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/EnumArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/EnumArgument.java
-index 7f9578913da8b19843a986db2aa08cb19c746a0d..4681fdd63d3f3efbb5afaf88d186940ab30e6a76 100644
+index 15404a14aa3df3ed730f4283f03f265ac3862959..4ff7766781a4b83a1ee59f02bcdec83fd9691aa8 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/EnumArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/EnumArgument.java
 @@ -227,8 +227,11 @@ public class EnumArgument<C, E extends Enum<E>> extends CommandArgument<C, E> {
@@ -294,7 +294,7 @@ index 7f9578913da8b19843a986db2aa08cb19c746a0d..4681fdd63d3f3efbb5afaf88d186940a
              this.input = input;
              this.enumClass = enumClass;
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/StringArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/StringArgument.java
-index 9c3816ebfc56ab125685a1685aa6f9746f3445b4..66d00ad2967a1d8a665f0d345295eaf6e3559f38 100644
+index 653a59036ce2a2053c1e5df289794e14d6dbe000..d49fcc03c3aa399d3e1d2e37bb65b88f73b2fe91 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/StringArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/StringArgument.java
 @@ -490,8 +490,11 @@ public final class StringArgument<C> extends CommandArgument<C, String> {
@@ -312,7 +312,7 @@ index 9c3816ebfc56ab125685a1685aa6f9746f3445b4..66d00ad2967a1d8a665f0d345295eaf6
              this.input = input;
              this.stringMode = stringMode;
 diff --git a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/UUIDArgument.java b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/UUIDArgument.java
-index bf2d1e791284d5c8341604a5f33358156a3fd4b9..99e945d3264e7f25d2ed9f5f0073fc89a7127e9b 100644
+index 15e98c8c3148d2f63220720f8d9e39964a5d28c6..144ebd9d853869127ae18aa87cea289c6b311487 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/arguments/standard/UUIDArgument.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/arguments/standard/UUIDArgument.java
 @@ -182,7 +182,10 @@ public final class UUIDArgument<C> extends CommandArgument<C, UUID> {
@@ -328,7 +328,7 @@ index bf2d1e791284d5c8341604a5f33358156a3fd4b9..99e945d3264e7f25d2ed9f5f0073fc89
              this.input = input;
          }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/captions/CaptionVariableReplacementHandler.java b/cloud-core/src/main/java/cloud/commandframework/captions/CaptionVariableReplacementHandler.java
-index d37b59c6557c6bf0f2da2b0270225618e4bac0bd..c2f515d6c75f4941d74d35346ede262233fcbd5b 100644
+index 70c4bac3b0fa752805f22fdcc74361c0973a27b3..7926d98825aaf27f21763984102db7642f0bcbca 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/captions/CaptionVariableReplacementHandler.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/captions/CaptionVariableReplacementHandler.java
 @@ -39,5 +39,12 @@ public interface CaptionVariableReplacementHandler {
@@ -346,7 +346,7 @@ index d37b59c6557c6bf0f2da2b0270225618e4bac0bd..c2f515d6c75f4941d74d35346ede2622
 +    // cloudnet end
  }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/captions/StandardCaptionKeys.java b/cloud-core/src/main/java/cloud/commandframework/captions/StandardCaptionKeys.java
-index 77d9bafc80de0c394602b97986ae47c5919b9a8e..07bf16880deca2678718bf6630de41172739da17 100644
+index 25a91167c153063afb41ea28c078be9f5f86a8eb..641196d69ddcb510939497c57a0c65a16d62e2e8 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/captions/StandardCaptionKeys.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/captions/StandardCaptionKeys.java
 @@ -40,7 +40,7 @@ public final class StandardCaptionKeys {
@@ -397,10 +397,10 @@ index 77d9bafc80de0c394602b97986ae47c5919b9a8e..07bf16880deca2678718bf6630de4117
      }
  
 diff --git a/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java b/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java
-index 1ba10551c56f5f910775c4ef84bb58e7c56bdeef..69404ae44849695315f3e6c0202511e41230a5d0 100644
+index 9109b472e0234b479c1d7fe1d7268d5e040ad08c..63c9f03b6ccf477b3dba519a6dd7a11af80652e3 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java
-@@ -52,6 +52,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
+@@ -53,6 +53,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
   * @param <C> Command sender type
   */
  @API(status = API.Status.STABLE)
@@ -408,7 +408,7 @@ index 1ba10551c56f5f910775c4ef84bb58e7c56bdeef..69404ae44849695315f3e6c0202511e4
  public class CommandContext<C> {
  
      private final CaptionVariableReplacementHandler captionVariableReplacementHandler;
-@@ -144,6 +145,13 @@ public class CommandContext<C> {
+@@ -145,6 +146,13 @@ public class CommandContext<C> {
              final @NonNull Caption caption,
              final @NonNull CaptionVariable... variables
      ) {
@@ -422,7 +422,7 @@ index 1ba10551c56f5f910775c4ef84bb58e7c56bdeef..69404ae44849695315f3e6c0202511e4
          return this.captionVariableReplacementHandler.replaceVariables(
                  this.captionRegistry.getCaption(caption, this.commandSender),
                  variables
-@@ -653,6 +661,11 @@ public class CommandContext<C> {
+@@ -673,6 +681,11 @@ public class CommandContext<C> {
          return this.commandManager.parameterInjectorRegistry().getInjectable(clazz, this, AnnotationAccessor.empty());
      }
  
@@ -435,7 +435,7 @@ index 1ba10551c56f5f910775c4ef84bb58e7c56bdeef..69404ae44849695315f3e6c0202511e4
      /**
       * Used to track performance metrics related to command parsing. This is attached
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/ArgumentParseException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/ArgumentParseException.java
-index 6c6d0989f87ff5ecefd407826cc91de557beb334..a2a3dfe0dfa0a522f055e99b165ce74c5daadcd6 100644
+index 37d8117b1b540e8f6d5d4908eb0b25fc0d630300..8d8ca6c963994227420c81eb3698e04c5b5eda23 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/ArgumentParseException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/ArgumentParseException.java
 @@ -29,11 +29,16 @@ import org.apiguardian.api.API;
@@ -483,7 +483,7 @@ index 6c6d0989f87ff5ecefd407826cc91de557beb334..a2a3dfe0dfa0a522f055e99b165ce74c
       * Get the cause of the exception
       *
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/CommandParseException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/CommandParseException.java
-index 938f01dc2d72f901605f940a65de759cf2f1b788..75580cc111d49568c71ad73c21c742ee5ecebf6c 100644
+index b83f768461093c7c562f8d88ea393cc7382e2caa..105ee6a1cbd9fead8d2c224c4ce733eda21edd9b 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/CommandParseException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/CommandParseException.java
 @@ -34,7 +34,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
@@ -512,7 +512,7 @@ index 938f01dc2d72f901605f940a65de759cf2f1b788..75580cc111d49568c71ad73c21c742ee
          this.currentChain = currentChain;
      }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidCommandSenderException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidCommandSenderException.java
-index 1d3b6f6818e6fcb9c40aaf88a53574ec323a9038..bea41c0f63f105daed847b6d450aa9f66e203cfc 100644
+index 5485cb4defc4e31297c45e8dd7892a6859d1ff20..05ee41ec9c0b928641f59f796b91f903db9e123a 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidCommandSenderException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidCommandSenderException.java
 @@ -52,9 +52,12 @@ public final class InvalidCommandSenderException extends CommandParseException {
@@ -557,7 +557,7 @@ index 1d3b6f6818e6fcb9c40aaf88a53574ec323a9038..bea41c0f63f105daed847b6d450aa9f6
                  "%s is not allowed to execute that command. Must be of type %s",
                  getCommandSender().getClass().getSimpleName(),
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidSyntaxException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidSyntaxException.java
-index 3accd115864382ed37771dda53d5517a57a037a6..5f5855fb1f46f4da9b0a50af0e4b5346bdf0433d 100644
+index 6db04bdae14d307dd041f54ac8b42a5dafde69a0..d5ef1b57706d4a613c7e7b0bd9c32364f1b9f04d 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidSyntaxException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/InvalidSyntaxException.java
 @@ -49,9 +49,13 @@ public class InvalidSyntaxException extends CommandParseException {
@@ -587,7 +587,7 @@ index 3accd115864382ed37771dda53d5517a57a037a6..5f5855fb1f46f4da9b0a50af0e4b5346
      }
  }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/NoPermissionException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/NoPermissionException.java
-index d56e7a17d78eacbeef8da9cda46c1b032f5c5a17..7a79069afdb84c1d6541bb2bb07b4c77a5599636 100644
+index c9ff3c75753b874d410d6bbefca64e7179ba5cec..f05454e2afdbd93c99e1edc4d185a2c235cfc4ff 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/NoPermissionException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/NoPermissionException.java
 @@ -52,14 +52,21 @@ public class NoPermissionException extends CommandParseException {
@@ -615,7 +615,7 @@ index d56e7a17d78eacbeef8da9cda46c1b032f5c5a17..7a79069afdb84c1d6541bb2bb07b4c77
      }
  
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/NoSuchCommandException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/NoSuchCommandException.java
-index a7599e63d7fcbac6b3d041f34f67791c91fe3148..80f320133eff9520f6e8a50ebfb5b40dc8e907e1 100644
+index 3e19a9a8599a5859b78bae90b43d8402b77294c7..254891540842ce24fdc9450bb3803485db501611 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/NoSuchCommandException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/NoSuchCommandException.java
 @@ -50,15 +50,22 @@ public final class NoSuchCommandException extends CommandParseException {
@@ -644,7 +644,7 @@ index a7599e63d7fcbac6b3d041f34f67791c91fe3148..80f320133eff9520f6e8a50ebfb5b40d
          for (final CommandArgument<?, ?> commandArgument : this.getCurrentChain()) {
              if (commandArgument == null) {
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NoInputProvidedException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NoInputProvidedException.java
-index 90be4ccfaaf944cfc06e3662f90963efa9fe388a..b57b9494c43a4579a9d0d02d84cc87a7bf2046dc 100644
+index 4f7b5b5d83a5a39ecdfbefa56af6976a817b0e26..ee29e4833b2a1b79bb2b44486ed53002a307b06c 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NoInputProvidedException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NoInputProvidedException.java
 @@ -51,7 +51,8 @@ public class NoInputProvidedException extends ParserException {
@@ -658,7 +658,7 @@ index 90be4ccfaaf944cfc06e3662f90963efa9fe388a..b57b9494c43a4579a9d0d02d84cc87a7
      }
  }
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NumberParseException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NumberParseException.java
-index 9b3210c869d65dc66ebdd195a5886be4cbf3910f..014f17e2d4ffb4e0c0e173642dcafb115f27cba9 100644
+index 32ff6dc6f3d34b4d930509aea9bb44be86f71d7c..1046b94f8024e5b6b4c0d773c0a440ec34b88cf5 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NumberParseException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/NumberParseException.java
 @@ -57,9 +57,12 @@ public abstract class NumberParseException extends ParserException {
@@ -678,7 +678,7 @@ index 9b3210c869d65dc66ebdd195a5886be4cbf3910f..014f17e2d4ffb4e0c0e173642dcafb11
          this.input = input;
          this.min = min;
 diff --git a/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/ParserException.java b/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/ParserException.java
-index 8e4ae370d2dd05ce436d7dcd18976fcd5630ad8e..3420a6f08e7d14117e944a939ce960a66e21e0d7 100644
+index df3849eaf3226866cae1ab9c04c50120a6f94ea3..5f999902c1337ca6b674a8f7b0688aac7976e265 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/ParserException.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/exceptions/parsing/ParserException.java
 @@ -32,7 +32,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
@@ -784,7 +784,7 @@ index 0000000000000000000000000000000000000000..c34c1cd4a5b30135c30fddf59bcd0ecb
 +    }
 +}
 diff --git a/cloud-irc/cloud-pircbotx/src/main/java/cloud/commandframework/pircbotx/arguments/UserArgument.java b/cloud-irc/cloud-pircbotx/src/main/java/cloud/commandframework/pircbotx/arguments/UserArgument.java
-index 165bdcb4a95995b9b9c540238bec205718379f25..c82b5f2d8a0824f4b5157c32093bc20a662c4038 100644
+index 2e7b6beabd18574c34d0cc3db745e1fa8880f51d..60f286b9bf234332fd994ad59810269dc4420681 100644
 --- a/cloud-irc/cloud-pircbotx/src/main/java/cloud/commandframework/pircbotx/arguments/UserArgument.java
 +++ b/cloud-irc/cloud-pircbotx/src/main/java/cloud/commandframework/pircbotx/arguments/UserArgument.java
 @@ -171,10 +171,13 @@ public final class UserArgument<C> extends CommandArgument<C, User> {
@@ -806,7 +806,7 @@ index 165bdcb4a95995b9b9c540238bec205718379f25..c82b5f2d8a0824f4b5157c32093bc20a
          }
      }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/argument/NamespacedKeyArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/argument/NamespacedKeyArgument.java
-index 849899101334d632b41576173469c3ade654802b..82b08fad835eba34568171c9a2238a073f0646ce 100644
+index d95089edcf7f5df828a991d51933cbdc8403cb4b..6a735bc3ab63cc1800bfa5c84f5597d15876b49c 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/argument/NamespacedKeyArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/argument/NamespacedKeyArgument.java
 @@ -315,7 +315,10 @@ public final class NamespacedKeyArgument<C> extends CommandArgument<C, Namespace
@@ -822,7 +822,7 @@ index 849899101334d632b41576173469c3ade654802b..82b08fad835eba34568171c9a2238a07
              this.input = input;
          }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/EnchantmentArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/EnchantmentArgument.java
-index ad3f4a5af0cb706f339ddf8b07bd697fefcc26fd..a21a3ea5c30a74dcd44747f5436f6fe1958b7107 100644
+index 468d426ad90c65977287e357202c9593c662dd87..0743f753c11087f674f0f5aefd7ec9ed60b177f8 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/EnchantmentArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/EnchantmentArgument.java
 @@ -206,7 +206,10 @@ public class EnchantmentArgument<C> extends CommandArgument<C, Enchantment> {
@@ -838,7 +838,7 @@ index ad3f4a5af0cb706f339ddf8b07bd697fefcc26fd..a21a3ea5c30a74dcd44747f5436f6fe1
              this.input = input;
          }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/MaterialArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/MaterialArgument.java
-index c711c5080613b6e8c7fbdfa46084d1b4b21285c2..6d3e8c329dc4a0d92c4d797c0889c8a525880b11 100644
+index 74b7b91a73bfd8c4bcdb51306ac15f983ea3db9d..05cf30cab185421d724610a5c9cd301184bf96c6 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/MaterialArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/MaterialArgument.java
 @@ -181,7 +181,10 @@ public class MaterialArgument<C> extends CommandArgument<C, Material> {
@@ -854,7 +854,7 @@ index c711c5080613b6e8c7fbdfa46084d1b4b21285c2..6d3e8c329dc4a0d92c4d797c0889c8a5
              this.input = input;
          }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/OfflinePlayerArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/OfflinePlayerArgument.java
-index d9985eedcd880b6613700fcc42623f6f8f55c4fb..f54b5d27434acbee4bc788c9aa97f9683e7ebbe8 100644
+index 97e66fc971654d09085f9867a3bb01f794954b69..47dd371384ccf30ed4380b399eb9a768488e62f7 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/OfflinePlayerArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/OfflinePlayerArgument.java
 @@ -211,7 +211,10 @@ public final class OfflinePlayerArgument<C> extends CommandArgument<C, OfflinePl
@@ -870,7 +870,7 @@ index d9985eedcd880b6613700fcc42623f6f8f55c4fb..f54b5d27434acbee4bc788c9aa97f968
              this.input = input;
          }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/PlayerArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/PlayerArgument.java
-index 0bca91a19509cb16a80126e2ffef0d506e4a3984..c7fa7900537e68367339a76d89d6c77bd76fa083 100644
+index e8b5d84a4e6a645ccd1cf9ae920353fc65a39ae8..56115c621763026a94cb7ef08f035441bd72d2cf 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/PlayerArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/PlayerArgument.java
 @@ -203,7 +203,10 @@ public final class PlayerArgument<C> extends CommandArgument<C, Player> {
@@ -886,7 +886,7 @@ index 0bca91a19509cb16a80126e2ffef0d506e4a3984..c7fa7900537e68367339a76d89d6c77b
              this.input = input;
          }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/WorldArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/WorldArgument.java
-index 6ae75bd8e3c94f63969f23a38945e39aedb3b699..ad2750c47f6b9dde5de79a08fdc502ae5aa57032 100644
+index 933ecc46e2446a480641b4f26184c47937c613ca..d703d955615cb53804e389d0b776ef632be0ebfb 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/WorldArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/WorldArgument.java
 @@ -176,7 +176,10 @@ public class WorldArgument<C> extends CommandArgument<C, World> {
@@ -902,7 +902,7 @@ index 6ae75bd8e3c94f63969f23a38945e39aedb3b699..ad2750c47f6b9dde5de79a08fdc502ae
              this.input = input;
          }
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/location/LocationArgument.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/location/LocationArgument.java
-index affcb713cf5550df33d6211739316089b6850cbc..3e83fde7e111eb53204ce82921a62dadff047ee8 100644
+index e79a87d44684269bac4fe6e0c4d32b966a0f1c36..8be519625579b90de5d4157b2dea5687dd68c908 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/location/LocationArgument.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/location/LocationArgument.java
 @@ -318,7 +318,10 @@ public final class LocationArgument<C> extends CommandArgument<C, Location> {
@@ -918,10 +918,10 @@ index affcb713cf5550df33d6211739316089b6850cbc..3e83fde7e111eb53204ce82921a62dad
          }
  
 diff --git a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/selector/SelectorParseException.java b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/selector/SelectorParseException.java
-index 63293aa7c014fafadf5ad0a70b9579e426e1961d..1dc9d3b3e3968143d4f7de5324a9dd83e1ea1d6f 100644
+index 5672df220ace7e22702cc266345d17a5d9c8fb22..425e6363b3ffeffcfe6012691f90d94eba49f8d6 100644
 --- a/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/selector/SelectorParseException.java
 +++ b/cloud-minecraft/cloud-bukkit/src/main/java/cloud/commandframework/bukkit/parsers/selector/SelectorParseException.java
-@@ -57,7 +57,10 @@ public final class SelectorParseException extends ParserException {
+@@ -58,7 +58,10 @@ public final class SelectorParseException extends ParserException {
                  parser,
                  context,
                  reason.getCaption(),
@@ -934,7 +934,7 @@ index 63293aa7c014fafadf5ad0a70b9579e426e1961d..1dc9d3b3e3968143d4f7de5324a9dd83
          this.reason = reason;
          this.input = input;
 diff --git a/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/PlayerArgument.java b/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/PlayerArgument.java
-index 88a0f8de1e8d90466debc9a2480e16ae3a902543..529cd2e5cf1272c9f43fd6e79667ef1e2fce87a9 100644
+index 31b2a85357349c6fbf55994d75798a9065418b03..edf40233a1cf5425a142fd49375129994a737869 100644
 --- a/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/PlayerArgument.java
 +++ b/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/PlayerArgument.java
 @@ -197,7 +197,10 @@ public final class PlayerArgument<C> extends CommandArgument<C, ProxiedPlayer> {
@@ -950,7 +950,7 @@ index 88a0f8de1e8d90466debc9a2480e16ae3a902543..529cd2e5cf1272c9f43fd6e79667ef1e
          }
      }
 diff --git a/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/ServerArgument.java b/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/ServerArgument.java
-index 92495dad5c4b3d47559b1b51ccbabcfb2e16271b..ef34076d168cdcba3b66f888084c694e781b9bc8 100644
+index 495f274b7c2f4da71fd5f7a887363791c9d0c2f2..cad2dfe39a6d55c446d8bade8e4d1afb6519e2dd 100644
 --- a/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/ServerArgument.java
 +++ b/cloud-minecraft/cloud-bungee/src/main/java/cloud/commandframework/bungee/arguments/ServerArgument.java
 @@ -185,7 +185,10 @@ public final class ServerArgument<C> extends CommandArgument<C, ServerInfo> {
@@ -966,7 +966,7 @@ index 92495dad5c4b3d47559b1b51ccbabcfb2e16271b..ef34076d168cdcba3b66f888084c694e
          }
      }
 diff --git a/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/RegistryEntryArgument.java b/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/RegistryEntryArgument.java
-index b29263d0fc5871b0d0bd8ac65ad03a1f488a0a89..3a070bf6bb678c4b009341edf47ee548c25b8773 100644
+index 1e8ae4d9986764555de9ab5a69e1d5a840477b91..1a752ee34da9f463baef1b16357fc82b067ab4c8 100644
 --- a/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/RegistryEntryArgument.java
 +++ b/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/RegistryEntryArgument.java
 @@ -352,8 +352,11 @@ public class RegistryEntryArgument<C, V> extends CommandArgument<C, V> {
@@ -984,7 +984,7 @@ index b29263d0fc5871b0d0bd8ac65ad03a1f488a0a89..3a070bf6bb678c4b009341edf47ee548
          }
      }
 diff --git a/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/TeamArgument.java b/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/TeamArgument.java
-index cf114373932f86b2bd166658a90c0339bf948f57..dd32cfe527680b09092e4c995f0722e9836d8b18 100644
+index 57609f3de23b45092bc4fb2c98f915ccca23cb08..89bd1675c4123e9a7092217226731c6557c53fc7 100644
 --- a/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/TeamArgument.java
 +++ b/cloud-minecraft/cloud-fabric/src/main/java/cloud/commandframework/fabric/argument/TeamArgument.java
 @@ -234,7 +234,10 @@ public final class TeamArgument<C> extends CommandArgument<C, PlayerTeam> {
@@ -1000,7 +1000,7 @@ index cf114373932f86b2bd166658a90c0339bf948f57..dd32cfe527680b09092e4c995f0722e9
          }
      }
 diff --git a/cloud-minecraft/cloud-minecraft-extras/src/main/java/cloud/commandframework/minecraft/extras/TextColorArgument.java b/cloud-minecraft/cloud-minecraft-extras/src/main/java/cloud/commandframework/minecraft/extras/TextColorArgument.java
-index d7f871b155c5379c02587f49ab494cbaea025142..9c03fb87d8c1c0668c21cd6eedf6ba597254bad9 100644
+index 538ea655e49d6cacaad7890c04e089f217d33b81..5d3d50f785861518df04bacca3bc12fe64e46765 100644
 --- a/cloud-minecraft/cloud-minecraft-extras/src/main/java/cloud/commandframework/minecraft/extras/TextColorArgument.java
 +++ b/cloud-minecraft/cloud-minecraft-extras/src/main/java/cloud/commandframework/minecraft/extras/TextColorArgument.java
 @@ -227,7 +227,10 @@ public final class TextColorArgument<C> extends CommandArgument<C, TextColor> {
@@ -1016,7 +1016,7 @@ index d7f871b155c5379c02587f49ab494cbaea025142..9c03fb87d8c1c0668c21cd6eedf6ba59
          }
      }
 diff --git a/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/PlayerArgument.java b/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/PlayerArgument.java
-index 45f5d9a46586c8bd46a8797e9954a20e2413298a..2b06de2ea25bb8dcac7c160f1dac82a3d94c9dd9 100644
+index 9edd4f422236bad0101eb759f5ea3f73462f9800..a1975f38a8c8664d9aa8796980f2b97be9a5da85 100644
 --- a/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/PlayerArgument.java
 +++ b/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/PlayerArgument.java
 @@ -192,7 +192,10 @@ public final class PlayerArgument<C> extends CommandArgument<C, Player> {
@@ -1032,7 +1032,7 @@ index 45f5d9a46586c8bd46a8797e9954a20e2413298a..2b06de2ea25bb8dcac7c160f1dac82a3
          }
      }
 diff --git a/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/ServerArgument.java b/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/ServerArgument.java
-index 084f2f2e22de29b3c8986ef055fb75e8163701f7..1d81a30db2b4a228e53bdcf4b755573e64b198b8 100644
+index dfa104f2c3e124a13840c1d6ae009659aee13c28..50e8634d889732c8835a2c649a3f65c4d72e8da4 100644
 --- a/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/ServerArgument.java
 +++ b/cloud-minecraft/cloud-velocity/src/main/java/cloud/commandframework/velocity/arguments/ServerArgument.java
 @@ -185,7 +185,10 @@ public final class ServerArgument<C> extends CommandArgument<C, RegisteredServer
