@@ -5,7 +5,7 @@ Subject: [PATCH] disable static argument suggestion validation
 
 
 diff --git a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-index 9f507c88a41940a366e7e7dc37185039f9302dc5..e4f114fe7082d8c8da857edecb092fd2afe4419f 100644
+index c054e55f276840413593b6c9df5522fe9932dc45..e971e6bb4b3065d7276101cffbeda17267f1f564 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 @@ -602,7 +602,7 @@ public final class CommandTree<C> {

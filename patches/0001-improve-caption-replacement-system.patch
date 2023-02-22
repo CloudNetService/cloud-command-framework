@@ -5,7 +5,7 @@ Subject: [PATCH] improve caption replacement system
 
 
 diff --git a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-index 7486d3bc4b875246d08bf7421535a1b3c0076932..9f507c88a41940a366e7e7dc37185039f9302dc5 100644
+index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe9932dc45 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 @@ -142,7 +142,11 @@ public final class CommandTree<C> {
