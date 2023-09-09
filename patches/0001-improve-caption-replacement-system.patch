@@ -5,7 +5,7 @@ Subject: [PATCH] improve caption replacement system
 
 
 diff --git a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
-index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe9932dc45 100644
+index 8caa710b43ee8f4233d0afd37580e7077bb302f8..239cff7294d53d7abd713c6d6b3d3a2a0ca2fddd 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/CommandTree.java
 @@ -142,7 +142,11 @@ public final class CommandTree<C> {
@@ -69,7 +69,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                  ));
              }
          } else {
-@@ -255,7 +271,11 @@ public final class CommandTree<C> {
+@@ -263,7 +279,11 @@ public final class CommandTree<C> {
                  return Pair.of(null, new NoSuchCommandException(
                          commandContext.getSender(),
                          this.getChain(root).stream().map(Node::getValue).collect(Collectors.toList()),
@@ -82,7 +82,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                  ));
              }
              /* If we couldn't match a child, check if there's a command attached and execute it */
-@@ -272,7 +292,10 @@ public final class CommandTree<C> {
+@@ -280,7 +300,10 @@ public final class CommandTree<C> {
                                      .stream()
                                      .filter(node -> node.getValue() != null)
                                      .map(Node::getValue)
@@ -94,7 +94,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                      ));
                  }
                  return Pair.of(root.getValue().getOwningCommand(), null);
-@@ -285,7 +308,10 @@ public final class CommandTree<C> {
+@@ -293,7 +316,10 @@ public final class CommandTree<C> {
                      .stream()
                      .filter(node -> node.getValue() != null)
                      .map(Node::getValue)
@@ -106,7 +106,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
              ));
          }
      }
-@@ -336,7 +362,10 @@ public final class CommandTree<C> {
+@@ -344,7 +370,10 @@ public final class CommandTree<C> {
                                  .stream()
                                  .filter(node -> node.getValue() != null)
                                  .map(Node::getValue)
@@ -118,7 +118,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                  ));
              }
              if (child.getValue() != null) {
-@@ -373,7 +402,10 @@ public final class CommandTree<C> {
+@@ -381,7 +410,10 @@ public final class CommandTree<C> {
                                                  .stream()
                                                  .filter(node -> node.getValue() != null)
                                                  .map(Node::getValue)
@@ -130,7 +130,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                                  ));
                              }
                              return Pair.of(command, null);
-@@ -389,7 +421,10 @@ public final class CommandTree<C> {
+@@ -397,7 +429,10 @@ public final class CommandTree<C> {
                                  .stream()
                                  .filter(node -> node.getValue() != null)
                                  .map(Node::getValue)
@@ -142,7 +142,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                          ));
                      } else {
                          /* The child is not a leaf, but may have an intermediary executor, attempt to use it */
-@@ -406,7 +441,10 @@ public final class CommandTree<C> {
+@@ -414,7 +449,10 @@ public final class CommandTree<C> {
                                                  .stream()
                                                  .filter(node -> node.getValue() != null)
                                                  .map(Node::getValue)
@@ -154,7 +154,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                                  ));
                              }
                              return Pair.of(command, null);
-@@ -419,7 +457,10 @@ public final class CommandTree<C> {
+@@ -427,7 +465,10 @@ public final class CommandTree<C> {
                                  .stream()
                                  .filter(node -> node.getValue() != null)
                                  .map(Node::getValue)
@@ -166,7 +166,7 @@ index 615c6d3c5c0bb959c43cfd6a87b1db5a778d7aae..c054e55f276840413593b6c9df5522fe
                          ));
                      }
                  }
-@@ -457,7 +498,10 @@ public final class CommandTree<C> {
+@@ -474,7 +515,10 @@ public final class CommandTree<C> {
                                      .stream()
                                      .filter(node -> node.getValue() != null)
                                      .map(Node::getValue)
@@ -397,10 +397,10 @@ index 25a91167c153063afb41ea28c078be9f5f86a8eb..641196d69ddcb510939497c57a0c65a1
      }
  
 diff --git a/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java b/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java
-index 9109b472e0234b479c1d7fe1d7268d5e040ad08c..63c9f03b6ccf477b3dba519a6dd7a11af80652e3 100644
+index ef714cd88030a1af5bb3d1f1096c3630b617afb7..3b8b39555a4915839bee1476b6dd056f05a31065 100644
 --- a/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java
 +++ b/cloud-core/src/main/java/cloud/commandframework/context/CommandContext.java
-@@ -53,6 +53,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
+@@ -57,6 +57,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
   * @param <C> Command sender type
   */
  @API(status = API.Status.STABLE)
@@ -408,7 +408,7 @@ index 9109b472e0234b479c1d7fe1d7268d5e040ad08c..63c9f03b6ccf477b3dba519a6dd7a11a
  public class CommandContext<C> {
  
      private final CaptionVariableReplacementHandler captionVariableReplacementHandler;
-@@ -145,6 +146,13 @@ public class CommandContext<C> {
+@@ -149,6 +150,13 @@ public class CommandContext<C> {
              final @NonNull Caption caption,
              final @NonNull CaptionVariable... variables
      ) {
@@ -422,7 +422,7 @@ index 9109b472e0234b479c1d7fe1d7268d5e040ad08c..63c9f03b6ccf477b3dba519a6dd7a11a
          return this.captionVariableReplacementHandler.replaceVariables(
                  this.captionRegistry.getCaption(caption, this.commandSender),
                  variables
-@@ -673,6 +681,11 @@ public class CommandContext<C> {
+@@ -760,6 +768,11 @@ public class CommandContext<C> {
          return this.commandManager.parameterInjectorRegistry().getInjectable(clazz, this, AnnotationAccessor.empty());
      }
  
