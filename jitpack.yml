@@ -3,5 +3,5 @@ before_install:
   - sdk update && sdk install java 21-zulu && sdk use java 21-zulu
   - git config --global user.email "jitpack@build-env.com" && git config --global user.name "Jitpack Build"
 install:
-  - git submodule deinit -f cloud && git submodule init && ./gradlew updateSubmodules applyPatches
+  - git submodule deinit -f cloud && git submodule init && ./gradlew updateSubmodules && ./gradlew applyPatches
   - cd patched-cloud && ./gradlew publishToMavenLocal
