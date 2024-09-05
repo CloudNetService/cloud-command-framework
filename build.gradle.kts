@@ -1,13 +1,13 @@
-import net.minecrell.gitpatcher.PatchExtension
-
 plugins {
-    id("net.minecraftforge.gitpatcher") version "0.10.+"
+    id("ca.stellardrift.gitpatcher") version "1.1.0"
 }
 
-configure<PatchExtension> {
-    submodule = "cloud"
-    patches = file("patches")
-    target = file("patched-cloud")
+gitPatcher.patchedRepos {
+    register("cloud") {
+        submodule = "cloud"
+        patches = file("patches")
+        target = file("patched-cloud")
+    }
 }
 
 tasks.register("rebuildPatches") {
